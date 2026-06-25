@@ -1,0 +1,30 @@
+# Root hidden directories (ignores .idea, .gradle, .vscode, etc.)
+/.*/
+
+# Gradle build artifacts
+build/
+**/bin/
+**/out/
+*.class
+
+# Root Markdown files(ignores ROADMAP.md, etc.)
+/*.md
+!/README.md
+
+# Log Files
+*.log
+
+# Frontend (client) dependencies & build
+client/node_modules/
+client/dist/
+client/.env.local
+client/.env.development.local
+client/.env.test.local
+client/.env.production.local
+client/npm-debug.log*
+client/yarn-debug.log*
+client/yarn-error.log*
+
+# OS specific files
+.DS_Store
+Thumbs.db

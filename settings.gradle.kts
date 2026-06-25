@@ -1,0 +1,10 @@
+rootProject.name = "protest"
+include("auth")
+include("gateway")
+include("projects")
+include("cases")
+include("runs")
+include("integration")
+include("notifications")
+include("e2e-tests")
+include("web-utils")

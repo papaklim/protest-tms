@@ -1,0 +1,38 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPath": "/api/cases",
+    "queryParameters": {
+      "projectId": {
+        "matches": ".*"
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*"
+    },
+    "jsonBody": [
+      {
+        "id": "33333333-4444-5555-6666-777777777777",
+        "projectId": "11111111-2222-3333-4444-555555555555",
+        "title": "Успешный логин (валидные данные)",
+        "status": "ACTIVE",
+        "layer": "UI",
+        "isAutomated": true,
+        "authorId": "99999999-9999-9999-9999-999999999999"
+      },
+      {
+        "id": "44444444-5555-6666-7777-888888888888",
+        "projectId": "11111111-2222-3333-4444-555555555555",
+        "title": "Попытка логина без пароля",
+        "status": "DRAFT",
+        "layer": "E2E",
+        "isAutomated": false,
+        "authorId": "99999999-9999-9999-9999-999999999999"
+      }
+    ]
+  }
+}

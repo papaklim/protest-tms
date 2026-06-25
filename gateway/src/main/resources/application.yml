@@ -1,0 +1,17 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: protest-gateway
+
+protest:
+  services: 
+    auth-url: http://localhost:9000
+    projects-url: http://localhost:8091
+    cases-url: http://localhost:8092
+  # security:
+  #   oauth2:
+  #     resourceserver:
+  #       jwt:
+  #         issuer-uri: http://localhost:9000

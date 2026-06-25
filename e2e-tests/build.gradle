@@ -1,0 +1,35 @@
+plugins {
+    id 'java'
+}
+
+dependencies {
+    // JUnit 6
+    testImplementation 'org.junit.jupiter:junit-jupiter:6.1.0'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:6.1.0'
+    
+    // Web (Selenide 7)
+    testImplementation 'com.codeborne:selenide:7.16.2'
+   
+    // API (Retrofit 3 + OkHttp 5)
+    testImplementation 'com.squareup.okhttp3:okhttp:5.4.0'
+    testImplementation 'com.squareup.okhttp3:logging-interceptor:5.4.0'
+    testImplementation 'com.squareup.retrofit2:retrofit:3.0.0'
+    testImplementation 'com.squareup.retrofit2:converter-jackson:3.0.0'
+   
+    // Allure
+    testImplementation 'io.qameta.allure:allure-junit5:2.30.0'
+    testImplementation 'io.qameta.allure:allure-selenide:2.30.0'
+    testImplementation 'io.qameta.allure:allure-okhttp3:2.30.0'
+   
+    // DB and Utils
+    testImplementation 'org.postgresql:postgresql:42.7.7'
+    testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.16.1'
+    
+    // Lombok
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.46'
+    testCompileOnly 'org.projectlombok:lombok:1.18.46'
+}
+
+test {
+    useJUnitPlatform()
+}

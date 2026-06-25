@@ -1,0 +1,29 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPath": "/api/projects"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*"
+    },
+    "jsonBody": [
+      {
+        "id": "11111111-2222-3333-4444-555555555555",
+        "name": "E-Commerce Web",
+        "description": "Тесты интернет-магазина",
+        "isActive": true,
+        "createdAt": "2026-06-23T10:00:00"
+      },
+      {
+        "id": "22222222-3333-4444-5555-666666666666",
+        "name": "Mobile Banking",
+        "description": "Мобильное приложение iOS/Android",
+        "isActive": true,
+        "createdAt": "2026-06-23T11:00:00"
+      }
+    ]
+  }
+}
