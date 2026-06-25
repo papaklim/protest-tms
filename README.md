@@ -1,4 +1,10 @@
-## **Технологии, использованные в ProTEST**
+# ProTEST (Test Management System)
+
+**ProTEST TMS** — это распределенная система управления тестированием на микросервисной архитектуре. Проект предназначен для создания и хранения тест-кейсов, логического разделения по проектам, проведения запусков и сбора статистики автоматизированного и ручного тестирования.
+
+---
+
+## **Технологии, использованные в ProTEST TMS**
 
 - [Spring Boot 4](https://spring.io/projects/spring-boot)
 - [Spring Authorization Server 1/2](https://spring.io/projects/spring-authorization-server)
@@ -22,7 +28,7 @@
 
 ---
 
-**Схема проекта ProTEST**
+**Схема проекта**
 
 ```mermaid
 graph TD
@@ -42,17 +48,17 @@ graph TD
 
 ---
 
-# Минимальные предусловия для работы с проектом ProTEST
+# Минимальные предусловия для работы 
 
-#### 0. Если у вас ОС Windows
-Необходимо использовать **bash terminal** (git bash, wsl), а не powershell. Обязательно добавьте bash терминал в качестве терминала в вашей IDE.
+#### 0. Если установлена ОС Windows
+Необходимо использовать **bash terminal** (git bash, wsl), а не powershell. Обязательно добавить bash терминал в качестве терминала в используемой IDE.
 
 #### 1. Установить docker (Если не установлен)
-Мы используем Docker для запуска баз данных, Kafka и MinIO S3.
+Docker нужен для запуска баз данных, Kafka и MinIO S3.
 - [Установка на Mac](https://docs.docker.com/desktop/install/mac-install/)
 - [Установка на Windows](https://docs.docker.com/desktop/install/windows-install/)
 
-После установки убедитесь, что docker daemon запущен: `docker -v`.
+После установки убедиться, что docker daemon запущен: `docker -v`.
 
 #### 2. Спуллить контейнеры postgres:17-alpine, apache/kafka:3.7.0, minio/minio
 ```bash
@@ -62,7 +68,7 @@ docker pull minio/minio:RELEASE.2024-01-28T22-35-53Z
 ```
 
 #### 3. Запустить инфраструктуру (БД, Kafka, MinIO)
-Запустите скрипт из корня проекта:
+Запустить скрипт из корня проекта:
 ```bash
 bash localenv.sh
 ```
@@ -76,10 +82,10 @@ bash localenv.sh
 
 ---
 
-# Запуск ProTEST локально:
+# Локальный запуск:
 
 #### 1. Запуск Frontend (React)
-Перейдите в каталог фронтенда, установите зависимости и запустите dev-сервер:
+Перейти в каталог фронтенда, установить зависимости и запустить dev-сервер:
 ```bash
 cd client
 npm install
@@ -88,7 +94,7 @@ npm run dev
 Фронтенд будет доступен по адресу: http://localhost:3000/
 
 #### 2. Запуск Backend (микросервисы)
-Запустите в вашей IDE (IntelliJ IDEA) следующие Application-классы с активным профилем `local`:
+Запустить в IDE следующие Application-классы с активным профилем `local`:
 - `ProjectApplication` (сервис управления проектами)
 - `TestCaseApplication` (сервис тест-кейсов)
 - `GatewayApplication` (маршрутизатор запросов)
