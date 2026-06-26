@@ -3,7 +3,6 @@ package io.protest.cases.service;
 import java.util.List;
 import java.util.UUID;
 
-import org.apache.tomcat.util.http.parser.TE;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

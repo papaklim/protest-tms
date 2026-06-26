@@ -114,15 +114,15 @@ erDiagram
 
 # Минимальные предусловия для работы 
 
-#### 0. Если у вас ОС Windows
-Необходимо использовать **bash terminal** (git bash, wsl), а не powershell. Обязательно добавьте bash терминал в качестве терминала в вашей IDE.
+#### 0. Если установлена ОС Windows
+Необходимо использовать **bash terminal** (git bash, wsl), а не powershell. Обязательно добавить bash терминал в качестве терминала в используемой IDE.
 
 #### 1. Установить docker (Если не установлен)
-Мы используем Docker для запуска баз данных, Kafka и MinIO S3.
+Docker нужен для запуска баз данных, Kafka и MinIO S3.
 - [Установка на Mac](https://docs.docker.com/desktop/install/mac-install/)
 - [Установка на Windows](https://docs.docker.com/desktop/install/windows-install/)
 
-После установки убедитесь, что docker daemon запущен: `docker -v`.
+После установки убедиться, что docker daemon запущен: `docker -v`.
 
 #### 2. Спуллить контейнеры postgres:17-alpine, apache/kafka:3.7.0, minio/minio
 ```bash
@@ -132,7 +132,7 @@ docker pull minio/minio:RELEASE.2024-01-28T22-35-53Z
 ```
 
 #### 3. Запустить инфраструктуру (БД, Kafka, MinIO)
-Запустите скрипт из корня проекта:
+Запустить скрипт из корня проекта:
 ```bash
 bash localenv.sh
 ```
@@ -149,7 +149,7 @@ bash localenv.sh
 # Локальный запуск:
 
 #### 1. Запуск Frontend (React)
-Перейдите в каталог фронтенда, установите зависимости и запустите dev-сервер:
+Перейти в каталог фронтенда, установить зависимости и запустить dev-сервер:
 ```bash
 cd client
 npm install
