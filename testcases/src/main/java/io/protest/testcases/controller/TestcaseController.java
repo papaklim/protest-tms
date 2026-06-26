@@ -1,4 +1,4 @@
-package io.protest.gateway.controller;
+package io.protest.testcases.controller;
 
 import java.util.List;
 import java.util.UUID;
@@ -15,50 +15,43 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.protest.gateway.model.dto.TestcaseDto;
-import io.protest.gateway.service.ProjectClient;
-import io.protest.gateway.service.TestcaseClient;
+import io.protest.testcases.data.entity.TestcaseEntity;
+import io.protest.testcases.model.dto.TestcaseDto;
+import io.protest.testcases.service.TestcaseService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/bff/testcases")
+@RequestMapping("/api/testcases")
 public class TestcaseController {
+    private final TestcaseService testcaseService;
 
-    private final TestcaseClient testcaseClient;
-    private final ProjectClient projectClient;
-
-    public TestcaseController(TestcaseClient testcaseClient, ProjectClient projectClient) {
-        this.testcaseClient = testcaseClient;
-        this.projectClient = projectClient;
+    public TestcaseController(TestcaseService testcaseService) {
+        this.testcaseService = testcaseService;
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public TestcaseDto createTestcase(@Valid @RequestBody TestcaseDto testcaseDto) {
-        projectClient.getProjectById(testcaseDto.projectId());
-        return testcaseClient.createTestcase(testcaseDto);
+    public TestcaseDto createTestcase(@RequestBody TestcaseDto testcaseDto) {
+        return testcaseService.createTestcase(testcaseDto);
     }
 
     @GetMapping("/{id}")
     public TestcaseDto getTestcaseById(@PathVariable("id") UUID id) {
-        return testcaseClient.getTestcaseById(id);
-
+        return testcaseService.getTestcaseById(id);
     }
 
     @PutMapping("/{id}")
     public TestcaseDto updateTestcaseById(@PathVariable("id") UUID id, @Valid @RequestBody TestcaseDto request) {
-        return testcaseClient.updateTestcase(id, request);
-
+        return testcaseService.updateTestcase(id, request);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeTestcaseById(@PathVariable("id") UUID id) {
-        testcaseClient.deleteTestcase(id);
+        testcaseService.deleteTestcase(id);
     }
 
     @GetMapping
     public List<TestcaseDto> getAllTestCaseByProjectId(@RequestParam("project_id") UUID projectId) {
-        return testcaseClient.getAllTestcasesByProjectId(projectId);
+        return testcaseService.getAllTestcasesByProjectId(projectId);
     }
 }

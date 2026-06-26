@@ -1,6 +1,5 @@
 server:
   port: 8080
-
 spring:
   application:
     name: protest-gateway
@@ -9,10 +8,14 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://localhost:9000
+  web:
+    error:
+      include-message: always
 
 protest:
   services: 
     auth-url: http://localhost:9000
     projects-url: http://localhost:8091
-    cases-url: http://localhost:8092
+    testcases-url: http://localhost:8092
+    runs-url: http://localhost:8093
 

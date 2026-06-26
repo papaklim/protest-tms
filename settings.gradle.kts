@@ -2,7 +2,7 @@ rootProject.name = "protest"
 include("auth")
 include("gateway")
 include("projects")
-include("cases")
+include("testcases")
 include("runs")
 include("integration")
 include("notifications")

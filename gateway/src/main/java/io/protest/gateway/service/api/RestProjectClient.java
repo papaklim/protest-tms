@@ -38,7 +38,7 @@ public class RestProjectClient implements ProjectClient {
 
     @Override
     public void deleteProject(UUID id) {
-        restClient.delete().uri(API_PROJECTS_PATH + "/{id}").retrieve().toBodilessEntity();
+        restClient.delete().uri(API_PROJECTS_PATH + "/{id}", id).retrieve().toBodilessEntity();
     }
 
     @Override

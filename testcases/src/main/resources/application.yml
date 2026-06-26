@@ -1,11 +1,11 @@
 server:
-  port: 8093
+  port: 8092
 
 spring:
   application:
-    name: protest-runs
+    name: protest-testcases
   datasource:
-    url: jdbc:postgresql://localhost:15432/protest-runs
+    url: jdbc:postgresql://localhost:15432/protest-cases
     username: postgres
     password: password
     driver-class-name: org.postgresql.Driver
@@ -18,16 +18,10 @@ spring:
     hibernate:
       ddl-auto: validate
     show-sql: true
+  flyway:
+    enabled: true
   kafka:
     bootstrap-servers: localhost:19092
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-    consumer:
-      group-id: protest-runs-group
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      properties:
-        "[spring.json.trusted.packages]": "io.protest.webutils.event"
-  flyway:
-    enabled: true

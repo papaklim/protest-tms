@@ -16,18 +16,16 @@ repositories {
 dependencies {
     val springdocOpenapiVersion = "2.8.4"
     val lombokVersion = "1.18.46"
-   
-    // Общие утилиты (подключение локального модуля)
+
     implementation(project(":web-utils"))
 
     // Стартеры Spring Boot
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-validation")
-    // Безопасность и проверка JWT-токенов
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
-
+    
     // БД и Миграции
     implementation("org.springframework.boot:spring-boot-starter-flyway")
     implementation("org.flywaydb:flyway-database-postgresql")

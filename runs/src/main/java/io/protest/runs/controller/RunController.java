@@ -32,12 +32,12 @@ public class RunController {
 
     @PostMapping
     public RunDto createRun(@Valid @RequestBody CreateRunRequest request, @AuthenticationPrincipal Jwt jwt) {
-        UUID creatorId = UUID.fromString(jwt.getSubject());
+        UUID creatorId = getUserId(jwt);
         return runService.createRun(request, creatorId);
     }
 
     @GetMapping("/{id}")
-    public RunDto getRunById(@PathVariable UUID id) {
+    public RunDto getRunById(@PathVariable("id") UUID id) {
         return runService.getRunById(id);
     }
 
@@ -48,9 +48,18 @@ public class RunController {
 
     @PutMapping("/{runId}/results/{testcaseId}")
     public RunResultDto updateResult(
-            @PathVariable UUID runId, @PathVariable UUID testcaseId, @Valid @RequestBody UpdateResultRequest request, @AuthenticationPrincipal Jwt jwt
+            @PathVariable("runId") UUID runId, @PathVariable("testcaseId") UUID testcaseId, @Valid @RequestBody UpdateResultRequest request, @AuthenticationPrincipal Jwt jwt
     ) {
-        UUID executorId = UUID.fromString(jwt.getSubject());
+        UUID executorId = getUserId(jwt);
         return runService.updateResult(runId, testcaseId, request, executorId);
+    }
+
+    private UUID getUserId(Jwt jwt) {
+        String subject = jwt.getSubject();
+        if ("gateway-client".equals(subject)) {
+            // Маркер 'Система' для запросов от технических клиентов шлюза
+            return UUID.fromString("00000000-0000-0000-0000-000000000000");
+        }
+        return UUID.fromString(subject); // Для пользователей всегда будет валидный UUID
     }
 }

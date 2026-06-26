@@ -6,7 +6,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public record ProtestServicesConfig(
     String authUrl,
     String projectsUrl,
-    String casesUrl
+    String testcasesUrl,
+    String runsUrl
 ) {
 
 }

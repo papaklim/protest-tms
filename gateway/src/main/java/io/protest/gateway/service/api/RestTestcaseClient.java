@@ -19,7 +19,7 @@ public class RestTestcaseClient implements TestcaseClient {
 
 
     public RestTestcaseClient(RestClient.Builder restClientBuilder, ProtestServicesConfig config) {
-        this.restClient = restClientBuilder.baseUrl(config.projectsUrl()).build();
+        this.restClient = restClientBuilder.baseUrl(config.testcasesUrl()).build();
     }
 
     @Override
@@ -39,7 +39,7 @@ public class RestTestcaseClient implements TestcaseClient {
 
     @Override
     public void deleteTestcase(UUID id) {
-        restClient.delete().uri(API_TESTCASES_PATH + "/{id}").retrieve().toBodilessEntity();
+        restClient.delete().uri(API_TESTCASES_PATH + "/{id}", id).retrieve().toBodilessEntity();
     }
 
     @Override

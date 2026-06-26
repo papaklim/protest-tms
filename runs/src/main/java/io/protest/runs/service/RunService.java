@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import io.protest.runs.data.entity.RunEntity;
 import io.protest.runs.data.entity.RunResultEntity;
+import io.protest.runs.data.repository.CachedTestcaseRepository;
 import io.protest.runs.data.repository.RunRepository;
 import io.protest.runs.model.dto.CreateRunRequest;
 import io.protest.runs.model.dto.RunDto;
@@ -23,8 +24,11 @@ import jakarta.persistence.EntityNotFoundException;
 public class RunService {
     private final RunRepository runRepository;
 
-    public RunService(RunRepository runRepository) {
+    private final CachedTestcaseRepository cachedTestcaseRepository;
+
+    public RunService(RunRepository runRepository, CachedTestcaseRepository cachedTestcaseRepository) {
         this.runRepository = runRepository;
+        this.cachedTestcaseRepository = cachedTestcaseRepository;
     }
 
     public RunDto createRun(CreateRunRequest request, UUID creatorId) {
@@ -38,9 +42,10 @@ public class RunService {
             RunResultEntity result = new RunResultEntity();
             result.setTestcaseId(testcaseId);
             result.setStatus(RunResultStatus.UNTESTED);
+            cachedTestcaseRepository.findById(testcaseId).ifPresent(result::setCachedTestcase);
             run.addResult(result);
         }
-        RunEntity saved = runRepository.save(run);
+        RunEntity saved = runRepository.saveAndFlush(run);
         return RunDto.fromEntity(saved);
     }
 
