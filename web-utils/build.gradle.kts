@@ -17,4 +17,7 @@ dependencies {
     
     // Для класса EntityNotFoundException
     implementation("jakarta.persistence:jakarta.persistence-api")
+
+    // Зависимость для OpenAPI (compileOnly, чтобы не навязывать UI-стартер модулям без веба)
+    compileOnly("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.4")
 }

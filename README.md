@@ -48,6 +48,70 @@ graph TD
 
 ---
 
+**Схема баз данных (ER)**
+
+Так как сервисы распределены, физические внешние ключи (Foreign Key) существуют только внутри баз данных конкретных микросервисов. Связи между базами разных микросервисов являются логическими (хранятся UUID сущностей).
+
+```mermaid
+erDiagram
+    subgraph Projects DB
+        projects {
+            uuid id PK
+            varchar name
+            varchar description
+            timestamp created_at
+        }
+    end
+
+    subgraph Cases DB
+        test_cases {
+            uuid id PK
+            uuid project_id FK "Логический ключ на Projects.id"
+            varchar title
+            varchar description
+            varchar status "DRAFT, ACTIVE, DEPRECATED"
+            varchar expected_result
+            varchar type "FUNCTIONAL, INTEGRATION, etc."
+            varchar preconditions
+            varchar postconditions
+            varchar layer "UI, API, UNIT"
+            boolean automated
+            uuid author_id
+            timestamp created_at
+            jsonb custom_fields
+        }
+    end
+
+    subgraph Runs DB
+        test_runs ||--o{ test_run_results : "Один ко многим (Физический FK)"
+        test_runs {
+            uuid id PK
+            uuid project_id FK "Логический ключ на Projects.id"
+            varchar title
+            varchar description
+            varchar status "CREATED, IN_PROGRESS, COMPLETED, ABORTED"
+            uuid creator_id
+            timestamp created_at
+            timestamp started_at
+            timestamp completed_at
+        }
+        test_run_results {
+            uuid id PK
+            uuid run_id FK "Физический FK на test_runs.id"
+            uuid testcase_id FK "Логический ключ на test_cases.id"
+            varchar status "UNTESTED, PASSED, FAILED, BLOCKED, SKIPPED"
+            uuid assignee_id "Кому поручено пройти тест"
+            varchar comment "Причина падения или комментарий"
+            timestamp executed_at
+            uuid executor_id "Кто фактически выполнил тест"
+        }
+    end
+```
+
+---
+
+---
+
 # Минимальные предусловия для работы 
 
 #### 0. Если у вас ОС Windows

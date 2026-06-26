@@ -1,5 +1,7 @@
 package io.protest.gateway.service.api;
 
+import static java.util.Collections.emptyList;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -10,15 +12,13 @@ import io.protest.gateway.config.ProtestServicesConfig;
 import io.protest.gateway.model.dto.ProjectDto;
 import io.protest.gateway.service.ProjectClient;
 
-import static java.util.Collections.emptyList;
-
 @Component
 public class RestProjectClient implements ProjectClient {
     private static final String API_PROJECTS_PATH = "/api/projects";
     private final RestClient restClient;
 
-    public RestProjectClient(ProtestServicesConfig config) {
-        this.restClient = RestClient.builder().baseUrl(config.projectsUrl()).build();
+    public RestProjectClient(RestClient.Builder restClientBuilder, ProtestServicesConfig config) {
+        this.restClient = restClientBuilder.baseUrl(config.projectsUrl()).build();
     }
 
     @Override

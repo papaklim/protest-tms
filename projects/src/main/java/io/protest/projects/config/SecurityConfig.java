@@ -1,4 +1,4 @@
-package io.protest.gateway.config;
+package io.protest.projects.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
