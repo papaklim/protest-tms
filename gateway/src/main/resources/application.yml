@@ -19,3 +19,8 @@ protest:
     testcases-url: http://localhost:8092
     runs-url: http://localhost:8093
 
+logging:
+  level:
+    org.springframework.web: DEBUG
+    org.springframework.web.client.RestClient: DEBUG
+

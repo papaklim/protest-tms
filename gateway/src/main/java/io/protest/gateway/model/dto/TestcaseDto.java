@@ -1,11 +1,13 @@
 package io.protest.gateway.model.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
-import io.protest.gateway.model.enums.TestCaseType;
 import io.protest.gateway.model.enums.Layer;
 import io.protest.gateway.model.enums.TestCaseStatus;
+import io.protest.gateway.model.enums.TestCaseType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -21,6 +23,6 @@ public record TestcaseDto(
     TestCaseStatus status,
     UUID authorId,
     LocalDateTime createdAt,
-    LocalDateTime lastModifiedAt) {
-
+    LocalDateTime lastModifiedAt,
+    String section, List<Map<String, Object>> steps) {
 }

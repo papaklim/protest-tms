@@ -1,6 +1,8 @@
 package io.protest.testcases.model.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import io.protest.testcases.data.entity.TestcaseEntity;
@@ -26,7 +28,9 @@ public record TestcaseDto(
     TestcaseStatus status,
     UUID authorId,
     LocalDateTime createdAt,
-    LocalDateTime lastModifiedAt) {
+    LocalDateTime lastModifiedAt,
+    String section,
+    List<Map<String, Object>> steps) {
 
     public static TestcaseDto fromEntity(TestcaseEntity testCase) {
         return new TestcaseDto(
@@ -43,6 +47,8 @@ public record TestcaseDto(
                 testCase.getStatus(),
                 testCase.getAuthorId(),
                 testCase.getCreatedAt(),
-                testCase.getLastModifiedAt());
+                testCase.getLastModifiedAt(),
+                testCase.getSection(),
+                testCase.getSteps());
     }
 }

@@ -37,7 +37,7 @@ public class RunEntity {
     private String description;
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private RunStatus status = RunStatus.CREATED;
+    private RunStatus status = RunStatus.NEW;
     @Column(name = "creator_id")
     private UUID creatorId;
     @CreationTimestamp

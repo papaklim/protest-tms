@@ -36,6 +36,8 @@ public class TestcaseService {
         testcaseEntity.setPostconditions(testcase.postconditions());
         testcaseEntity.setLayer(testcase.layer());
         testcaseEntity.setAutomated(testcase.isAutomated());
+        testcaseEntity.setSection(testcase.section());
+        testcaseEntity.setSteps(testcase.steps());
         testcaseEntity.setStatus(testcase.status());
         testcaseEntity.setAuthorId(testcase.authorId());
         testcaseEntity.setCreatedAt(testcase.createdAt());
@@ -67,6 +69,8 @@ public class TestcaseService {
         testcaseEntity.setPostconditions(testcase.postconditions());
         testcaseEntity.setLayer(testcase.layer());
         testcaseEntity.setAutomated(testcase.isAutomated());
+        testcaseEntity.setSection(testcase.section());
+        testcaseEntity.setSteps(testcase.steps());
         testcaseEntity.setStatus(testcase.status());
         testcaseEntity.setAuthorId(testcase.authorId());
         testcaseEntity.setCreatedAt(testcase.createdAt());
