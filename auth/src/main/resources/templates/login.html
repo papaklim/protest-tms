@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProTEST — Вход</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Outfit:wght@600;700&amp;display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" th:href="@{/css/auth.css}" href="../static/css/auth.css">
+</head>
+<body>
+    <div class="auth-wrapper">
+        <!-- Крупный логотип над формой -->
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 12px;">
+            <svg width="270" height="270" viewBox="0 0 100 100" style="filter: drop-shadow(0 0 16px rgba(88,166,255,0.25));" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <filter id="logo-shadow" x="-20%" y="-20%" width="140%" height="140%">
+                        <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.6" />
+                    </filter>
+                    <filter id="round-corners">
+                        <feGaussianBlur in="SourceGraphic" stdDeviation="0.4" result="blur" />
+                        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" />
+                    </filter>
+                </defs>
+
+                <g filter="url(#logo-shadow)">
+                    <!-- Скругленная 3D группа кубиков -->
+                    <g filter="url(#round-corners)">
+                        <!-- Блок 1: Top-Back (Задний верхний куб) -->
+                        <g transform="translate(0, -3.5)">
+                            <polygon points="50,15 65,22.5 50,30 35,22.5" fill="#21262d" stroke="#30363d" stroke-width="0.8" stroke-linejoin="round" />
+                            <polygon points="35,22.5 50,30 50,45 35,37.5" fill="#1f242c" stroke="#30363d" stroke-width="0.8" stroke-linejoin="round" />
+                            <polygon points="50,30 65,22.5 65,37.5 50,45" fill="#161b22" stroke="#30363d" stroke-width="0.8" stroke-linejoin="round" />
+                        </g>
+                        <!-- Блок 6: Left-Bottom-Left (Левый нижний куб) -->
+                        <g transform="translate(-3.5, 1.75)">
+                            <polygon points="20,45 35,37.5 50,45 35,52.5" fill="#1d2128" stroke="#30363d" stroke-width="0.8" stroke-linejoin="round" />
+                            <polygon points="20,45 35,52.5 35,67.5 20,60" fill="#1f242c" stroke="#30363d" stroke-width="0.8" stroke-linejoin="round" />
+                            <polygon points="35,52.5 50,45 50,60 35,67.5" fill="#161b22" stroke="#30363d" stroke-width="0.8" stroke-linejoin="round" />
+                        </g>
+                        <!-- Блок 7: Right-Bottom-Right (Правый нижний куб) -->
+                        <g transform="translate(3.5, 1.75)">
+                            <polygon points="50,45 65,37.5 80,45 65,52.5" fill="#1d2128" stroke="#30363d" stroke-width="0.8" stroke-linejoin="round" />
+                            <polygon points="65,52.5 80,45 80,60 65,67.5" fill="#161b22" stroke="#30363d" stroke-width="0.8" stroke-linejoin="round" />
+                            <polygon points="50,45 65,52.5 65,67.5 50,60" fill="#1f242c" stroke="#30363d" stroke-width="0.8" stroke-linejoin="round" />
+                        </g>
+                        <!-- Блок 5: Front-Bottom (Передний нижний куб) -->
+                        <g transform="translate(0, 3.5)">
+                            <polygon points="35,52.5 50,45 65,52.5 50,60" fill="#1d2128" stroke="#30363d" stroke-width="0.8" stroke-linejoin="round" />
+                            <polygon points="35,52.5 50,60 50,75 35,67.5" fill="#1f242c" stroke="#30363d" stroke-width="0.8" stroke-linejoin="round" />
+                            <polygon points="50,60 65,52.5 65,67.5 50,75" fill="#161b22" stroke="#30363d" stroke-width="0.8" stroke-linejoin="round" />
+                        </g>
+                        <!-- Блок 3: Top-Left (Левый верхний куб) -->
+                        <g transform="translate(-3.5, -1.75)">
+                            <polygon points="35,22.5 50,30 35,37.5 20,30" fill="#21262d" stroke="#30363d" stroke-width="0.8" stroke-linejoin="round" />
+                            <polygon points="20,30 35,37.5 35,52.5 20,45" fill="#1f242c" stroke="#30363d" stroke-width="0.8" stroke-linejoin="round" />
+                            <polygon points="35,37.5 50,30 50,45 35,52.5" fill="#161b22" stroke="#30363d" stroke-width="0.8" stroke-linejoin="round" />
+                        </g>
+                        <!-- Блок 2: Top-Right (Правый верхний куб) -->
+                        <g transform="translate(3.5, -1.75)">
+                            <polygon points="65,22.5 80,30 65,37.5 50,30" fill="#21262d" stroke="#30363d" stroke-width="0.8" stroke-linejoin="round" />
+                            <polygon points="65,37.5 80,30 80,45 65,52.5" fill="#161b22" stroke="#30363d" stroke-width="0.8" stroke-linejoin="round" />
+                            <polygon points="50,30 65,37.5 65,52.5 50,45" fill="#1f242c" stroke="#30363d" stroke-width="0.8" stroke-linejoin="round" />
+                        </g>
+                        <!-- Блок 4: Front-Top (Передний верхний куб) -->
+                        <g transform="translate(0, 0)">
+                            <polygon points="50,30 65,37.5 50,45 35,37.5" fill="#21262d" stroke="#30363d" stroke-width="0.8" stroke-linejoin="round" />
+                            <polygon points="35,37.5 50,45 50,60 35,52.5" fill="#1f242c" stroke="#30363d" stroke-width="0.8" stroke-linejoin="round" />
+                            <polygon points="50,45 65,37.5 65,52.5 50,60" fill="#161b22" stroke="#30363d" stroke-width="0.8" stroke-linejoin="round" />
+                        </g>
+                    </g>
+
+                    <!-- Четкие тексты и элементы поверх кубиков (с теми же сдвигами) -->
+                    <!-- Блок 3: Top-Left -->
+                    <g transform="translate(-3.5, -1.75)">
+                        <g transform="matrix(1, 0.5, 0, 1, 0, 0)" fill="#ff7b72" font-family="'Outfit', 'Inter', sans-serif" font-weight="900" font-size="10.5px" text-anchor="middle" dominant-baseline="central">
+                            <text x="27.5" y="28">P</text>
+                        </g>
+                    </g>
+                    <!-- Блок 4: Front-Top -->
+                    <g transform="translate(0, 0)">
+                        <g transform="matrix(1, 0.5, 0, 1, 0, 0)" fill="#ff7b72" font-family="'Outfit', 'Inter', sans-serif" font-weight="900" font-size="10.5px" text-anchor="middle" dominant-baseline="central">
+                            <text x="42.5" y="28">R</text>
+                        </g>
+                        <g transform="matrix(1, -0.5, 0, 1, 0, 0)" fill="#ff7b72" font-family="'Outfit', 'Inter', sans-serif" font-weight="900" font-size="10.5px" text-anchor="middle" dominant-baseline="central">
+                            <text x="57.5" y="78">O</text>
+                        </g>
+                    </g>
+                    <!-- Блок 6: Left-Bottom-Left -->
+                    <g transform="translate(-3.5, 1.75)">
+                        <g transform="matrix(1, 0.5, 0, 1, 0, 0)" fill="#56d364" font-family="'Outfit', 'Inter', sans-serif" font-weight="900" font-size="10.5px" text-anchor="middle" dominant-baseline="central">
+                            <text x="27.5" y="43">T</text>
+                        </g>
+                    </g>
+                    <!-- Блок 5: Front-Bottom -->
+                    <g transform="translate(0, 3.5)">
+                        <g transform="matrix(1, 0.5, 0, 1, 0, 0)" fill="#56d364" font-family="'Outfit', 'Inter', sans-serif" font-weight="900" font-size="10.5px" text-anchor="middle" dominant-baseline="central">
+                            <text x="42.5" y="43">E</text>
+                        </g>
+                        <g transform="matrix(1, -0.5, 0, 1, 0, 0)" fill="#56d364" font-family="'Outfit', 'Inter', sans-serif" font-weight="900" font-size="10.5px" text-anchor="middle" dominant-baseline="central">
+                            <text x="57.5" y="93">S</text>
+                        </g>
+                    </g>
+                    <!-- Блок 7: Right-Bottom-Right -->
+                    <g transform="translate(3.5, 1.75)">
+                        <g transform="matrix(1, -0.5, 0, 1, 0, 0)" fill="#56d364" font-family="'Outfit', 'Inter', sans-serif" font-weight="900" font-size="10.5px" text-anchor="middle" dominant-baseline="central">
+                            <text x="72.5" y="93">T</text>
+                        </g>
+                    </g>
+                    <!-- Блок 2: Top-Right -->
+                    <g transform="translate(3.5, -1.75)">
+                        <!-- Outlined White Checkmark -->
+                        <g transform="matrix(1, -0.5, 0, 1, 0, 0)">
+                            <path d="M70,76.5 L72.2,78.7 L76,74" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+                        </g>
+                    </g>
+                </g>
+            </svg>
+            <span style="font-family: var(--font-brand); font-size: 32px; font-weight: 700; color: var(--text-primary); margin-top: 6px; letter-spacing: -0.5px;">ProTEST</span>
+        </div>
+
+        <!-- Карточка входа -->
+        <div class="auth-card">
+
+            <div class="card-header">
+                <h2 class="card-title">Вход в рабочую область</h2>
+                <p class="card-subtitle">Введите учётные данные для доступа к TMS.</p>
+            </div>
+
+            <!-- Ошибки Spring Security -->
+            <div th:if="${param.error}" class="error-banner">
+                Неверное имя пользователя или пароль.
+            </div>
+            <div th:if="${param.logout}" class="logout-banner">
+                Вы успешно вышли из системы.
+            </div>
+
+            <form th:action="@{/login}" method="post">
+                <!-- Имя пользователя -->
+                <div class="form-group">
+                    <label class="form-label" for="username">Имя пользователя</label>
+                    <input class="form-input" id="username" name="username"
+                           placeholder="Введите имя пользователя"
+                           required type="text" autofocus autocomplete="username"/>
+                </div>
+
+                <!-- Пароль — без "Забыли?" в label-row, Tab идёт прямо на это поле -->
+                <div class="form-group">
+                    <label class="form-label" for="password">Пароль</label>
+                    <div class="password-wrapper">
+                        <input class="form-input" id="password" name="password"
+                               placeholder="••••••••"
+                               required type="password" autocomplete="current-password"/>
+                        <button type="button" id="toggle-password" class="toggle-password-btn" tabindex="-1">
+                            <!-- Иконка закрытого глаза -->
+                            <svg class="eye-icon eye-closed" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 20px; height: 20px;">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
+                            </svg>
+                            <!-- Иконка открытого глаза -->
+                            <svg class="eye-icon eye-open" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 20px; height: 20px; display: none;">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.43 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                            </svg>
+                        </button>
+                    </div>
+                    <a class="forgot-link" href="#" tabindex="-1">Забыли пароль?</a>
+                </div>
+
+                <!-- Запомнить -->
+                <div class="form-checkbox-wrapper">
+                    <input id="remember-me" name="remember-me" type="checkbox"/>
+                    <label for="remember-me">Запомнить это устройство</label>
+                </div>
+
+                <!-- Кнопка входа -->
+                <button class="btn btn-primary" type="submit">Войти</button>
+
+                <div class="divider">или войти через</div>
+
+                <div class="social-grid">
+                    <!-- ЕСИА -->
+                    <button class="btn btn-social" type="button">
+                        <div th:replace="~{fragments/icons :: esia}"></div>
+                        Госуслуги
+                    </button>
+
+                    <!-- MAX -->
+                    <button class="btn btn-social" type="button">
+                        <div th:replace="~{fragments/icons :: max}"></div>
+                        MAX
+                    </button>
+
+                    <!-- Яндекс -->
+                    <button class="btn btn-social" type="button">
+                        <div th:replace="~{fragments/icons :: yandex}"></div>
+                        Яндекс.Почта
+                    </button>
+
+                    <!-- Mail.ru -->
+                    <button class="btn btn-social" type="button">
+                        <div th:replace="~{fragments/icons :: mailru}"></div>
+                        Mail.ru
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Подвал -->
+        <div class="auth-footer">
+            Нет аккаунта? <a class="auth-link" th:href="@{/register}" href="register.html">Создать</a>
+        </div>
+    </div>
+
+    <!-- Password visibility toggle script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById('password');
+            const toggleButton = document.getElementById('toggle-password');
+            const eyeClosed = toggleButton.querySelector('.eye-closed');
+            const eyeOpen = toggleButton.querySelector('.eye-open');
+
+            toggleButton.addEventListener('click', function() {
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    eyeClosed.style.display = 'none';
+                    eyeOpen.style.display = 'block';
+                } else {
+                    passwordInput.type = 'password';
+                    eyeClosed.style.display = 'block';
+                    eyeOpen.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

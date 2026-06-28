@@ -31,7 +31,7 @@ public class JpaUserDetailsService implements UserDetailsService {
         List<SimpleGrantedAuthority> grantedAuthorities = userEntity.getAuthorities().stream().map(
                 auth -> new SimpleGrantedAuthority(auth.getAuthority())).collect(Collectors.toList());
         return new User(
-                userEntity.getUsername(),
+                userEntity.getId().toString(),
                 userEntity.getPassword(),
                 userEntity.isEnabled(),
                 true, // accountNonExpired

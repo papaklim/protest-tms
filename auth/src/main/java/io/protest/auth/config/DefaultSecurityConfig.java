@@ -2,12 +2,12 @@ package io.protest.auth.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -16,11 +16,16 @@ public class DefaultSecurityConfig {
     // 1. Настройка стандартной цепочки фильтров для веб-интерфейса
     @Bean
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated() // Все запросы к серверу должны быть авторизованы
-        )
-                // Включение стандартной формы входа Spring Security (login page)
-                .formLogin(Customizer.withDefaults());
-
+        http.authorizeHttpRequests(
+                authorize -> authorize.requestMatchers(
+                        "/error", "/login", "/register", "/.well-known/**", "/css/**",
+                        "/favicon.ico").permitAll().anyRequest().authenticated()
+        ).formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/", false).permitAll()
+        ).logout(
+                logout -> logout.logoutRequestMatcher(
+                        PathPatternRequestMatcher.pathPattern("/logout")).logoutSuccessUrl(
+                                "http://localhost:3000").permitAll()
+        );
         return http.build();
     }
 
