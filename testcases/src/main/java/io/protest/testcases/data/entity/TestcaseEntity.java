@@ -2,6 +2,7 @@ package io.protest.testcases.data.entity;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -81,4 +82,10 @@ public class TestcaseEntity {
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "custom_fields", columnDefinition = "jsonb")
     private Map<String, String> customFields = new HashMap<>();
+
+    @Column(name = "section")
+    private String section;
+    @org.hibernate.annotations.JdbcTypeCode(org.hibernate.type.SqlTypes.JSON)
+    @Column(name = "steps", columnDefinition = "jsonb")
+    private List<Map<String, Object>> steps;
 }

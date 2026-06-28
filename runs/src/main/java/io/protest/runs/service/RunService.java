@@ -36,7 +36,7 @@ public class RunService {
         run.setProjectId(request.projectId());
         run.setTitle(request.title());
         run.setDescription(request.description());
-        run.setStatus(RunStatus.CREATED);
+        run.setStatus(RunStatus.NEW);
         run.setCreatorId(creatorId);
         for (UUID testcaseId : request.testcaseIds()) {
             RunResultEntity result = new RunResultEntity();
@@ -75,7 +75,7 @@ public class RunService {
         result.setExecutedAt(LocalDateTime.now());
         result.setExecutorId(executorId);
         // Жизненный цикл запуска: при первом прохождении теста переводится в IN_PROGRESS
-        if (run.getStatus() == RunStatus.CREATED) {
+        if (run.getStatus() == RunStatus.NEW) {
             run.setStatus(RunStatus.IN_PROGRESS);
             run.setStartedAt(LocalDateTime.now());
         }

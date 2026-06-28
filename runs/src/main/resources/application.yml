@@ -31,3 +31,7 @@ spring:
         "[spring.json.trusted.packages]": "io.protest.webutils.event"
   flyway:
     enabled: true
+
+logging:
+  level:
+    org.springframework.web: DEBUG
