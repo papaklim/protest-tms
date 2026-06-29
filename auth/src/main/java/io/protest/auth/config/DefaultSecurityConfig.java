@@ -7,6 +7,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 
 @Configuration
@@ -25,11 +28,15 @@ public class DefaultSecurityConfig {
                 logout -> logout.logoutRequestMatcher(
                         PathPatternRequestMatcher.pathPattern("/logout")).logoutSuccessUrl(
                                 "http://localhost:3000").permitAll()
-        );
+        ).csrf(
+                csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).csrfTokenRequestHandler(
+                        new CsrfTokenRequestAttributeHandler())
+        ).addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class);
+
         return http.build();
     }
 
-    // 2. Настройка шифрования паролей. 
+    // 2. Настройка шифрования паролей.
     // PasswordEncoderFactories.createDelegatingPasswordEncoder() по умолчанию использует BCrypt,
     // умеет распознавать префиксы вроде {bcrypt}, которые добавлены в SQL-миграции.
     @Bean

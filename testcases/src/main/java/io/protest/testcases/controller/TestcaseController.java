@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.protest.testcases.data.entity.TestcaseEntity;
 import io.protest.testcases.model.dto.TestcaseDto;
 import io.protest.testcases.service.TestcaseService;
 import jakarta.validation.Valid;
