@@ -33,6 +33,9 @@ dependencies {
     implementation("org.flywaydb:flyway-database-postgresql")
     implementation("org.postgresql:postgresql")
 
+    // Работа с Kafka
+    implementation("org.springframework.boot:spring-boot-starter-kafka")
+
     // Swagger 
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springdocOpenapiVersion")
     

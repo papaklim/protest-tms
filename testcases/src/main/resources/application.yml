@@ -1,0 +1,27 @@
+server:
+  port: 8092
+
+spring:
+  application:
+    name: protest-testcases
+  datasource:
+    url: jdbc:postgresql://localhost:15432/protest-cases
+    username: postgres
+    password: password
+    driver-class-name: org.postgresql.Driver
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9000
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+  flyway:
+    enabled: true
+  kafka:
+    bootstrap-servers: localhost:19092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.protest.gateway.model.dto.TestcaseDto;
+import io.protest.gateway.service.ProjectClient;
 import io.protest.gateway.service.TestcaseClient;
 import jakarta.validation.Valid;
 
@@ -24,14 +25,17 @@ import jakarta.validation.Valid;
 public class TestcaseController {
 
     private final TestcaseClient testcaseClient;
+    private final ProjectClient projectClient;
 
-    public TestcaseController(TestcaseClient testcaseClient) {
+    public TestcaseController(TestcaseClient testcaseClient, ProjectClient projectClient) {
         this.testcaseClient = testcaseClient;
+        this.projectClient = projectClient;
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public TestcaseDto createTestcase(@Valid @RequestBody TestcaseDto testcaseDto) {
+        projectClient.getProjectById(testcaseDto.projectId());
         return testcaseClient.createTestcase(testcaseDto);
     }
 

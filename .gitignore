@@ -8,7 +8,7 @@ build/
 *.class
 
 # Root Markdown files(ignores ROADMAP.md, etc.)
-/*.md
+/*.md*
 !/README.md
 
 # Log Files
@@ -32,3 +32,4 @@ Thumbs.db
 
 #Other
 docs
+course

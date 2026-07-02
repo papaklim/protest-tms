@@ -14,9 +14,12 @@ public record RunResultDto(
     UUID assigneeId,
     String comment,
     LocalDateTime executedAt,
-    UUID executorId) {
+    UUID executorId,
+    String testcaseTitle
+) {
 
     public static RunResultDto fromEntity(RunResultEntity entity) {
+        String title = entity.getCachedTestcase() != null ? entity.getCachedTestcase().getTitle() : "Unknown Testcase";
         return new RunResultDto(
                 entity.getId(),
                 entity.getRun().getId(),
@@ -25,7 +28,8 @@ public record RunResultDto(
                 entity.getAssigneeId(),
                 entity.getComment(),
                 entity.getExecutedAt(),
-                entity.getExecutorId()
+                entity.getExecutorId(),
+                title
         );
     }
 }

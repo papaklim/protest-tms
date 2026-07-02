@@ -35,14 +35,19 @@ graph TD
     Client[React Client: 3000] -->|HTTP| Gateway[Gateway: 8080]
     Gateway -->|Route| Projects[Projects Service: 8091]
     Gateway -->|Route| Cases[Cases Service: 8092]
+    Gateway -->|Route| Runs[Runs Service: 8093]
     Gateway -.->|Route| Auth[Auth Server: 9000]
     
     Cases -->|Shared Logic| WebUtils[web-utils]
     Projects -->|Shared Logic| WebUtils
+    Runs -->|Shared Logic| WebUtils
+    
+    Cases -->|Event: testcase-events| Kafka((Kafka: 19092))
+    Kafka -->|Consume| Runs
     
     Infrastructure[Local Infrastructure]
     Infrastructure --> DB[(PostgreSQL: 15432)]
-    Infrastructure --> Kafka((Kafka: 19092))
+    Infrastructure --> Kafka
     Infrastructure --> S3[(MinIO S3: 19000)]
 ```
 

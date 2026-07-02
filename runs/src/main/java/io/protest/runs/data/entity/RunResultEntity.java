@@ -3,6 +3,9 @@ package io.protest.runs.data.entity;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 import io.protest.runs.model.enums.RunResultStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -42,4 +45,8 @@ public class RunResultEntity {
     private LocalDateTime executedAt;
     @Column(name = "executor_id")
     private UUID executorId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "testcase_id", referencedColumnName = "id", insertable = false, updatable = false)
+    @NotFound(action = NotFoundAction.IGNORE)
+    private CachedTestcaseEntity cachedTestcase;
 }
