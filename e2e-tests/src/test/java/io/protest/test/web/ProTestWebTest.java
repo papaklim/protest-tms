@@ -6,17 +6,16 @@ import static com.codeborne.selenide.Selenide.open;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 
 import io.protest.test.web.config.Config;
-import io.protest.test.web.jupiter.Project;
-import io.protest.test.web.jupiter.extension.BrowserExtension;
+import io.protest.test.web.jupiter.annotation.Project;
+import io.protest.test.web.jupiter.annotation.Web;
 import io.protest.test.web.model.ProjectDto;
 import io.protest.test.web.page.LoginPage;
 import io.protest.test.web.page.RegisterPage;
 
 
-@ExtendWith(BrowserExtension.class)
+@Web
 public class ProTestWebTest {
 
     private static Config CFG = Config.INSTANCE;

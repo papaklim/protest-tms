@@ -12,7 +12,7 @@ import org.junit.jupiter.api.extension.ParameterResolver;
 import org.junit.platform.commons.support.AnnotationSupport;
 
 import io.protest.test.web.api.ProjectApiClient;
-import io.protest.test.web.jupiter.Project;
+import io.protest.test.web.jupiter.annotation.Project;
 import io.protest.test.web.model.ProjectDto;
 
 public class ProjectExtension implements BeforeEachCallback, AfterEachCallback, ParameterResolver {

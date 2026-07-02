@@ -212,8 +212,8 @@ export default function App() {
       })
       .catch(() => {
         const mockProj = [
-          { id: '11111111-1111-1111-1111-111111111111', name: 'Niffler App', description: 'Тестирование финансового приложения Niffler.' },
-          { id: '22222222-2222-2222-2222-222222222222', name: 'Rococo App', description: 'Тестирование каталога живописи Rococo.' }
+          { id: '11111111-1111-1111-1111-111111111111', name: 'ProTEST Core', description: 'Тестирование основного функционала платформы ProTEST.' },
+          { id: '22222222-2222-2222-2222-222222222222', name: 'Billing Service', description: 'Тестирование модуля выставления счетов и платежей.' }
         ];
         setProjects(mockProj);
         setSelectedProjectId(mockProj[0].id);
@@ -227,7 +227,7 @@ export default function App() {
     const mockCasesFallback = [
       { id: 'c1', projectId: '11111111-1111-1111-1111-111111111111', section: 'Авторизация', title: 'Успешный вход в систему', steps: [{ action: 'Открыть /login', expected: '' }, { action: 'Ввести креды', expected: '' }, { action: 'Войти', expected: 'Дашборд открыт' }], expectedResult: 'Дашборд открыт', layer: 'UI', isAutomated: true },
       { id: 'c2', projectId: '11111111-1111-1111-1111-111111111111', section: 'Авторизация', title: 'Валидация токена API', steps: [{ action: 'Отправить POST /login', expected: '' }, { action: 'Проверить JWT', expected: '200 OK + Token' }], expectedResult: '200 OK + Token', layer: 'API', isAutomated: true },
-      { id: 'c3', projectId: '22222222-2222-2222-2222-222222222222', section: 'Музеи', title: 'Добавление музея', steps: [{ action: 'Форма музея', expected: '' }, { action: 'Сохранить', expected: 'Появился в списке' }], expectedResult: 'Появился в списке', layer: 'E2E', isAutomated: false }
+      { id: 'c3', projectId: '22222222-2222-2222-2222-222222222222', section: 'Платежи', title: 'Создание счета на оплату', steps: [{ action: 'Открыть форму выставления счета', expected: '' }, { action: 'Заполнить сумму и нажать Создать', expected: 'Счет успешно сохранен в БД и отображен в списке' }], expectedResult: 'Счет успешно сохранен в БД и отображен в списке', layer: 'E2E', isAutomated: false }
     ];
     try {
       const results = await Promise.all(

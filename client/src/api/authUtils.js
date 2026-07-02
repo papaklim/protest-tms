@@ -141,3 +141,22 @@ export async function apiFetch(path, options = {}) {
 
   return response;
 }
+
+// Декодирование ролей из JWT токена
+export function getRolesFromToken() {
+  const token = getAccessToken();
+  if (!token) return [];
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    const payload = JSON.parse(jsonPayload);
+    return payload.roles || [];
+  } catch (e) {
+    console.error('Ошибка декодирования JWT токена:', e);
+    return [];
+  }
+}
+

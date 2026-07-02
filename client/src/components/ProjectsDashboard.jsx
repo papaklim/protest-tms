@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Plus, Edit2, Trash2, AlertTriangle } from 'lucide-react';
-import { apiFetch } from '../api/authUtils';
+import { apiFetch, getRolesFromToken } from '../api/authUtils';
 
 export function ProjectsDashboard({
   projects,
@@ -12,6 +12,9 @@ export function ProjectsDashboard({
   setSelectedSuite,
   showNotification,
 }) {
+  const roles = getRolesFromToken();
+  const canWrite = roles.includes('ADMIN') || roles.includes('LEAD');
+
   const [newProjectName, setNewProjectName] = useState('');
   const [newProjectDesc, setNewProjectDesc] = useState('');
   const [showCreateProjectForm, setShowCreateProjectForm] = useState(false);
@@ -173,14 +176,16 @@ export function ProjectsDashboard({
                         <div className="relative flex-grow">
                           <div className="flex justify-between items-start gap-2">
                             <h3 className="text-[18px] font-semibold text-[#f0f6fc] m-0 mb-2 leading-snug truncate flex-grow">{proj.name}</h3>
-                            <div className="flex gap-2" onClick={e => e.stopPropagation()}>
-                              <button className="text-[#8b949e] hover:text-[#f0f6fc] hover:bg-[#30363d] transition-all duration-150 p-1.5 rounded cursor-pointer flex items-center" onClick={() => handleStartEditProject(proj)} title="Редактировать">
-                                <Edit2 size={14} />
-                              </button>
-                              <button className="text-[#f85149] hover:text-[#ff7b72] hover:bg-[#f85149]/10 transition-all duration-150 p-1.5 rounded cursor-pointer flex items-center" onClick={() => setDeletingProjectId(proj.id)} title="Удалить">
-                                <Trash2 size={14} />
-                              </button>
-                            </div>
+                            {canWrite && (
+                              <div className="flex gap-2" onClick={e => e.stopPropagation()}>
+                                <button data-testid="edit-project-btn" className="text-[#8b949e] hover:text-[#f0f6fc] hover:bg-[#30363d] transition-all duration-150 p-1.5 rounded cursor-pointer flex items-center" onClick={() => handleStartEditProject(proj)} title="Редактировать">
+                                  <Edit2 size={14} />
+                                </button>
+                                <button data-testid="delete-project-btn" className="text-[#f85149] hover:text-[#ff7b72] hover:bg-[#f85149]/10 transition-all duration-150 p-1.5 rounded cursor-pointer flex items-center" onClick={() => setDeletingProjectId(proj.id)} title="Удалить">
+                                  <Trash2 size={14} />
+                                </button>
+                              </div>
+                            )}
                           </div>
                           <p className="text-[13px] text-[#8b949e] m-0 leading-normal line-clamp-2 mt-1">{proj.description}</p>
                         </div>
@@ -237,99 +242,102 @@ export function ProjectsDashboard({
           );
         })}
 
-        <div className="[perspective:1000px] h-[220px]">
-          <div
-            className="relative w-full h-full"
-            style={{ 
-              transform: showCreateProjectForm ? 'rotateY(180deg)' : 'rotateY(0deg)', 
-              transformStyle: 'preserve-3d',
-              transition: 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)'
-            }}
-          >
-            {/* Front Side: Кнопка создания */}
-            <div className="absolute w-full h-full top-0 left-0" style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}>
-              <div
-                style={{ padding: '20px' }}
-                className="h-full cursor-pointer flex flex-col justify-center items-center rounded-[10px] border border-[#30363d] border-dashed bg-transparent hover:border-[#58a6ff] hover:bg-[#21262d] transition-colors duration-200"
-                onClick={() => setShowCreateProjectForm(true)}
-              >
-                <div className="flex flex-col items-center gap-2 text-[#8b949e]">
-                  <Plus size={24} />
-                  <span className="text-sm font-semibold">Создать проект</span>
+        {canWrite && (
+          <div className="[perspective:1000px] h-[220px]">
+            <div
+              className="relative w-full h-full"
+              style={{ 
+                transform: showCreateProjectForm ? 'rotateY(180deg)' : 'rotateY(0deg)', 
+                transformStyle: 'preserve-3d',
+                transition: 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)'
+              }}
+            >
+              {/* Front Side: Кнопка создания */}
+              <div className="absolute w-full h-full top-0 left-0" style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}>
+                <div
+                  data-testid="create-project-btn"
+                  style={{ padding: '20px' }}
+                  className="h-full cursor-pointer flex flex-col justify-center items-center rounded-[10px] border border-[#30363d] border-dashed bg-transparent hover:border-[#58a6ff] hover:bg-[#21262d] transition-colors duration-200"
+                  onClick={() => setShowCreateProjectForm(true)}
+                >
+                  <div className="flex flex-col items-center gap-2 text-[#8b949e]">
+                    <Plus size={24} />
+                    <span className="text-sm font-semibold">Создать проект</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Back Side: Форма создания */}
+              <div className="absolute w-full h-full top-0 left-0" style={{ transform: 'rotateY(180deg)', backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}>
+                <div style={{ padding: '20px' }} className="h-full flex flex-col justify-stretch rounded-[10px] border border-[#58a6ff] bg-[#161b22]">
+                  <form onSubmit={handleCreateProject} onClick={e => e.stopPropagation()} className="flex flex-col gap-2.5 w-full h-full justify-between" noValidate>
+                    <div>
+                      <h3 className="text-sm font-semibold text-[#f0f6fc] m-0 mb-2">Новый проект</h3>
+                      <div className="flex flex-col gap-2">
+                        <input
+                          type="text"
+                          className={`rounded-lg border bg-[#0d1117] px-3.5 py-2 text-sm text-[#e6edf3] focus:outline-none transition-all w-full ${
+                            newProjectError 
+                              ? 'border-[#f85149] focus:border-[#f85149] focus:ring-2 focus:ring-[#f85149]/15' 
+                              : 'border-[#30363d] focus:border-[#58a6ff]'
+                          }`}
+                          placeholder="Название проекта"
+                          value={newProjectName}
+                          onChange={e => {
+                            setNewProjectName(e.target.value);
+                            if (e.target.value.trim() && newProjectError) {
+                              setNewProjectError(false);
+                            }
+                          }}
+                          required
+                        />
+                        {newProjectError && (
+                          <div className="text-[11px] text-[#f85149] bg-[#f85149]/8 border border-[#f85149]/25 rounded-md px-2.5 py-1.5 flex items-center gap-1.5 transition-all duration-200">
+                            <AlertTriangle size={12} className="flex-shrink-0" />
+                            <span>Название проекта обязательно</span>
+                          </div>
+                        )}
+                        <input
+                          type="text"
+                          className="rounded-lg border border-[#30363d] bg-[#0d1117] px-3.5 py-2 text-sm text-[#e6edf3] focus:border-[#58a6ff] focus:ring-3 focus:ring-[#58a6ff]/15 focus:outline-none transition-all w-full"
+                          placeholder="Описание"
+                          value={newProjectDesc}
+                          onChange={e => setNewProjectDesc(e.target.value)}
+                        />
+                      </div>
+                    </div>
+                    <div className="flex gap-2 justify-end mt-auto">
+                      <button
+                        type="button"
+                        className="rounded-lg bg-[#21262d] border border-[#30363d] px-4 py-2 text-xs font-semibold text-[#c9d1d9] hover:bg-[#30363d] hover:border-[#8b949e] cursor-pointer transition-all h-[32px] flex items-center justify-center"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (document.activeElement) {
+                            document.activeElement.blur();
+                          }
+                          setShowCreateProjectForm(false);
+                          setNewProjectError(false);
+                          setTimeout(() => {
+                            setNewProjectName('');
+                            setNewProjectDesc('');
+                          }, 500);
+                        }}
+                      >
+                        Отмена
+                      </button>
+                      <button
+                        type="submit"
+                        className="rounded-lg bg-[#2ea44f]/10 border border-[#2ea44f]/30 px-4 py-2 text-xs font-semibold text-[#2ea44f] hover:bg-[#2ea44f] hover:text-white hover:border-[#2ea44f] transition-all cursor-pointer h-[32px] flex items-center justify-center"
+                      >
+                        Создать
+                      </button>
+                    </div>
+                  </form>
                 </div>
               </div>
             </div>
-
-            {/* Back Side: Форма создания */}
-            <div className="absolute w-full h-full top-0 left-0" style={{ transform: 'rotateY(180deg)', backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}>
-              <div style={{ padding: '20px' }} className="h-full flex flex-col justify-stretch rounded-[10px] border border-[#58a6ff] bg-[#161b22]">
-                <form onSubmit={handleCreateProject} onClick={e => e.stopPropagation()} className="flex flex-col gap-2.5 w-full h-full justify-between" noValidate>
-                  <div>
-                    <h3 className="text-sm font-semibold text-[#f0f6fc] m-0 mb-2">Новый проект</h3>
-                    <div className="flex flex-col gap-2">
-                      <input
-                        type="text"
-                        className={`rounded-lg border bg-[#0d1117] px-3.5 py-2 text-sm text-[#e6edf3] focus:outline-none transition-all w-full ${
-                          newProjectError 
-                            ? 'border-[#f85149] focus:border-[#f85149] focus:ring-2 focus:ring-[#f85149]/15' 
-                            : 'border-[#30363d] focus:border-[#58a6ff]'
-                        }`}
-                        placeholder="Название проекта"
-                        value={newProjectName}
-                        onChange={e => {
-                          setNewProjectName(e.target.value);
-                          if (e.target.value.trim() && newProjectError) {
-                            setNewProjectError(false);
-                          }
-                        }}
-                        required
-                      />
-                      {newProjectError && (
-                        <div className="text-[11px] text-[#f85149] bg-[#f85149]/8 border border-[#f85149]/25 rounded-md px-2.5 py-1.5 flex items-center gap-1.5 transition-all duration-200">
-                          <AlertTriangle size={12} className="flex-shrink-0" />
-                          <span>Название проекта обязательно</span>
-                        </div>
-                      )}
-                      <input
-                        type="text"
-                        className="rounded-lg border border-[#30363d] bg-[#0d1117] px-3.5 py-2 text-sm text-[#e6edf3] focus:border-[#58a6ff] focus:ring-3 focus:ring-[#58a6ff]/15 focus:outline-none transition-all w-full"
-                        placeholder="Описание"
-                        value={newProjectDesc}
-                        onChange={e => setNewProjectDesc(e.target.value)}
-                      />
-                    </div>
-                  </div>
-                  <div className="flex gap-2 justify-end mt-auto">
-                    <button
-                      type="button"
-                      className="rounded-lg bg-[#21262d] border border-[#30363d] px-4 py-2 text-xs font-semibold text-[#c9d1d9] hover:bg-[#30363d] hover:border-[#8b949e] cursor-pointer transition-all h-[32px] flex items-center justify-center"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        if (document.activeElement) {
-                          document.activeElement.blur();
-                        }
-                        setShowCreateProjectForm(false);
-                        setNewProjectError(false);
-                        setTimeout(() => {
-                          setNewProjectName('');
-                          setNewProjectDesc('');
-                        }, 500);
-                      }}
-                    >
-                      Отмена
-                    </button>
-                    <button
-                      type="submit"
-                      className="rounded-lg bg-[#2ea44f]/10 border border-[#2ea44f]/30 px-4 py-2 text-xs font-semibold text-[#2ea44f] hover:bg-[#2ea44f] hover:text-white hover:border-[#2ea44f] transition-all cursor-pointer h-[32px] flex items-center justify-center"
-                    >
-                      Создать
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
